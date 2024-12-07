@@ -1,6 +1,131 @@
 
 
 
+// import React, { useEffect, useState, useRef } from "react";
+// import "./sidebar.css";
+// import { assets } from "../../assets/assets";
+// import axios from "axios";
+// import { account } from "../../appwrite"; // Import the account object from Appwrite.js
+
+// const Sidebar = ({ onNewChat, onChatSelect }) => {
+//   const [extended, setExtended] = useState(false);
+//   const [chats, setChats] = useState([]); // Chat sessions
+//   const [selectedChat, setSelectedChat] = useState(null); // Selected chat details
+//   const [loading, setLoading] = useState(false); // Loading state
+//   const [userId, setUserId] = useState(null); // User ID
+//   const [offset, setOffset] = useState(0); // Offset for chat pagination
+//   const [hasMore, setHasMore] = useState(true); // Flag to check if more chats are available
+
+//   useEffect(() => {
+//     const fetchUserId = async () => {
+//       try {
+//         const user = await account.get(); // Fetch the logged-in user from Appwrite
+//         setUserId(user?.$id || null); // Save the userId
+//       } catch (error) {
+//         console.error("Error fetching user:", error);
+//       }
+//     };
+
+//     fetchUserId();
+//   }, []);
+
+//   // Fetch chat sessions with pagination
+//   const fetchChats = async (loadMore = false) => {
+//     if (!userId || loading || (!hasMore && loadMore)) return;
+
+//     try {
+//       setLoading(true);
+//       const response = await axios.post("http://localhost:5000/api/chats", { userId, offset });
+//       const { chatList, offset: newOffset } = response.data;
+
+//       if (loadMore) {
+//         setChats((prevChats) => [...prevChats, ...chatList]); // Append new chats
+//       } else {
+//         setChats(chatList); // Set initial chats
+//       }
+
+//       setOffset(newOffset); // Update offset for the next call
+//       setHasMore(chatList.length === 10); // If less than 10 items, no more chats
+//     } catch (error) {
+//       console.error("Error fetching chats:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   // Initial fetch
+//   useEffect(() => {
+//     if (userId) {
+//       fetchChats();
+//     }
+//   }, [userId]);
+
+//   const fetchChatDetails = async (chatId) => {
+//     try {
+//       setLoading(true);
+//       const response = await axios.post("http://localhost:5000/api/history", {
+//         userId,
+//         sessionId: chatId,
+//       });
+//       if (response.data && response.data.conversation) {
+//         onChatSelect(response.data.conversation); // Pass conversation to App
+//         setSelectedChat(chatId); // Mark as selected
+//       } else {
+//         console.error("Invalid response structure:", response.data);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching chat details:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="sidebar">
+//       <div className="top">
+//         <img
+//           onClick={() => setExtended((prev) => !prev)}
+//           className="menu"
+//           src={assets.menu_icon}
+//           alt="menu"
+//         />
+//         <div className="new-chat" onClick={onNewChat}>
+//           <img src={assets.plus_icon} alt="new chat" />
+//           {extended ? <p>New Chat</p> : null}
+//         </div>
+//       </div>
+
+//       {extended && (
+//         <div className="recent">
+//           <p className="recent-title">Recent</p>
+//           <div className="recent-list">
+//             {chats.map((chat) => (
+//               <div
+//                 key={chat.sessionId}
+//                 className={`recent-entry ${selectedChat === chat.sessionId ? "selected" : ""}`}
+//                 onClick={() => fetchChatDetails(chat.sessionId)}
+//               >
+//                 <img src={assets.message_icon} alt="chat icon" />
+//                 <p>{chat.title || "Untitled Chat"}</p>
+//               </div>
+//             ))}
+//           </div>
+//           {hasMore && !loading && (
+//             <button className="load-more" onClick={() => fetchChats(true)}>
+//               Load More
+//             </button>
+//           )}
+//           {loading && <p>Loading more chats...</p>}
+//           {!hasMore && <p>No more chats available</p>}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Sidebar;
+
+
 
 
 
@@ -10,19 +135,18 @@ import React, { useEffect, useState, useRef } from "react";
 import "./sidebar.css";
 import { assets } from "../../assets/assets";
 import axios from "axios";
-import { account } from "../../appwrite"; // Import the account object from Appwrite.js
+import { account } from "../../appwrite";
 
 const Sidebar = ({ onNewChat, onChatSelect }) => {
   const [extended, setExtended] = useState(false);
   const [chats, setChats] = useState([]); // Chat sessions
   const [selectedChat, setSelectedChat] = useState(null); // Selected chat details
-  const [conversation, setConversation] = useState(null); // Chat conversation
   const [loading, setLoading] = useState(false); // Loading state
   const [userId, setUserId] = useState(null); // User ID
   const [offset, setOffset] = useState(0); // Offset for chat pagination
   const [hasMore, setHasMore] = useState(true); // Flag to check if more chats are available
-
-  const listRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(null); // Track open menu for each chat
+  const dropdownRef = useRef(null); // Reference to dropdown
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -39,11 +163,14 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
 
   // Fetch chat sessions with pagination
   const fetchChats = async (loadMore = false) => {
-    if (!userId || !hasMore || loading) return;
+    if (!userId || loading || (!hasMore && loadMore)) return;
 
     try {
       setLoading(true);
-      const response = await axios.post("http://localhost:5000/api/chats", { userId, offset });
+      const response = await axios.post("http://localhost:5000/api/chats", {
+        userId,
+        offset,
+      });
       const { chatList, offset: newOffset } = response.data;
 
       if (loadMore) {
@@ -68,28 +195,6 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
     }
   }, [userId]);
 
-  
-  // const fetchChatDetails = async (chatId) => {
-  //   try {
-  //     setLoading(true);
-  //     const response = await axios.post("http://localhost:5000/api/history", {
-  //       userId,
-  //       sessionId: chatId,
-  //     });
-  //     if (response.data && response.data.conversation) {
-  //       onChatSelect(response.data.conversation); // Pass conversation to App
-  //       setSelectedChat(chatId); // Mark as selected
-  //     } else {
-  //       console.error("Invalid response structure:", response.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching chat details:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-  
-
   const fetchChatDetails = async (chatId) => {
     try {
       setLoading(true);
@@ -109,16 +214,33 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
       setLoading(false);
     }
   };
-  
 
-  // Handle scroll event to load more chats
-  const handleScroll = () => {
-    if (!listRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = listRef.current;
-    if (scrollTop + clientHeight >= scrollHeight - 10 && hasMore) {
-      fetchChats(true); // Load more chats
-    }
+  const handleMenuClick = (chatId) => {
+    setMenuOpen((prev) => (prev === chatId ? null : chatId)); // Toggle menu
   };
+
+  const handleRename = (chatId) => {
+    console.log("Rename chat:", chatId);
+    setMenuOpen(null); // Close the menu
+  };
+
+  const handleDelete = (chatId) => {
+    console.log("Delete chat:", chatId);
+    setMenuOpen(null); // Close the menu
+  };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setMenuOpen(null); // Close the menu
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="sidebar">
@@ -135,43 +257,43 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
         </div>
       </div>
 
-      {extended ? (
+      {extended && (
         <div className="recent">
           <p className="recent-title">Recent</p>
-          <div
-            className="recent-list"
-            ref={listRef}
-            onScroll={handleScroll}
-          >
+          <div className="recent-list">
             {chats.map((chat) => (
-              <div
-                key={chat.sessionId}
-                className={`recent-entry ${
-                  selectedChat === chat.sessionId ? "selected" : ""
-                }`}
-                onClick={() => fetchChatDetails(chat.sessionId)}
-              >
-                <img src={assets.message_icon} alt="chat icon" />
-                <p>{chat.title || "Untitled Chat"}</p>
+              <div key={chat.sessionId} className="recent-entry">
+                <div
+                  className={`chat-content ${
+                    selectedChat === chat.sessionId ? "selected" : ""
+                  }`}
+                  onClick={() => fetchChatDetails(chat.sessionId)}
+                >
+                  <p>{chat.title || "Untitled Chat"}</p>
+                </div>
+                <div className="menu-icon" ref={dropdownRef}>
+                  <img
+                    src={assets.dots_icon} // Replace with your three-dots image asset
+                    alt="menu"
+                    onClick={() => handleMenuClick(chat.sessionId)}
+                  />
+                  {menuOpen === chat.sessionId && (
+                    <div className="menu-dropdown">
+                      <p onClick={() => handleRename(chat.sessionId)}>Rename</p>
+                      <p onClick={() => handleDelete(chat.sessionId)}>Delete</p>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
-            {loading && <p>Loading more chats...</p>}
-            {!hasMore && <p>No more chats available</p>}
           </div>
-        </div>
-      ) : null}
-
-      {selectedChat && conversation && (
-        <div className="conversation">
-          <h2>Conversation</h2>
-          {conversation.map((msg, index) => (
-            <div key={index} className="message">
-              <strong>{msg.sender}:</strong>
-              <p>{msg.message}</p>
-              <small>{new Date(msg.timestamp).toLocaleString()}</small>
-            </div>
-          ))}
-          <button onClick={() => setSelectedChat(null)}>Back to chats</button>
+          {hasMore && !loading && (
+            <button className="load-more" onClick={() => fetchChats(true)}>
+              Load More
+            </button>
+          )}
+          {loading && <p>Loading more chats...</p>}
+          {!hasMore && <p>No more chats available</p>}
         </div>
       )}
     </div>
@@ -179,5 +301,3 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
 };
 
 export default Sidebar;
-
-
