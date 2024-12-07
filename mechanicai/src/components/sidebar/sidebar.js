@@ -128,9 +128,6 @@
 
 
 
-
-
-
 import React, { useEffect, useState, useRef } from "react";
 import "./sidebar.css";
 import { assets } from "../../assets/assets";
@@ -272,11 +269,21 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
                   <p>{chat.title || "Untitled Chat"}</p>
                 </div>
                 <div className="menu-icon" ref={dropdownRef}>
-                  <img
-                    src={assets.dots_icon} // Replace with your three-dots image asset
-                    alt="menu"
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                     onClick={() => handleMenuClick(chat.sessionId)}
-                  />
+                  >
+                    {/* <circle cx="12" cy="5" r="2" fill="#bbb" />
+                    <circle cx="12" cy="12" r="2" fill="#bbb" />
+                    <circle cx="12" cy="19" r="2" fill="#bbb" /> */}
+                    <circle cx="12" cy="5" r="2" fill="black" />
+                    <circle cx="12" cy="12" r="2" fill="black" />
+                    <circle cx="12" cy="19" r="2" fill="black" />
+                  </svg>
                   {menuOpen === chat.sessionId && (
                     <div className="menu-dropdown">
                       <p onClick={() => handleRename(chat.sessionId)}>Rename</p>
