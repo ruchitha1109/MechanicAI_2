@@ -69,11 +69,17 @@ body {
 }
 
 .sidebar .recent {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 370px;
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: calc(100vh - 150px); /* Adjust height based on available space */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 370px;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: calc(100vh - 150px); /* Adjust height based on available space */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.sidebar .recent::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and other WebKit-based browsers */
 }
 
 .sidebar .load-more {
