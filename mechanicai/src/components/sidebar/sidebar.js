@@ -221,11 +221,35 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
     setMenuOpen(null); // Close the menu
   };
 
-  const handleDelete = (chatId) => {
-    console.log("Delete chat:", chatId);
-    setMenuOpen(null); // Close the menu
-  };
+  // const handleDelete = (chatId) => {
+  //   console.log("Delete chat:", chatId);
+  //   setMenuOpen(null); // Close the menu
+  // };
 
+  const handleDelete = async (chatId) => {
+    try {
+      setLoading(true); // Set loading state while deleting
+      // Make a POST request to the backend to delete the chat
+      const response = await axios.post("http://localhost:5000/api/delete", {
+        userId,
+        sessionId: chatId, // Send the chatId to the backend for deletion
+      });
+  
+      if (response.data.success) {
+        // Successfully deleted chat, remove it from the UI
+        setChats((prevChats) => prevChats.filter((chat) => chat.sessionId !== chatId));
+        setSelectedChat(null); // Deselect the deleted chat
+      } else {
+        console.error("Failed to delete the chat:", response.data.error);
+      }
+    } catch (error) {
+      console.error("Error deleting chat:", error);
+    } finally {
+      setMenuOpen(null); // Close the menu
+      setLoading(false); // Reset loading state
+    }
+  };
+  
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -308,3 +332,15 @@ const Sidebar = ({ onNewChat, onChatSelect }) => {
 };
 
 export default Sidebar;
+
+
+
+
+
+
+
+
+
+
+
+
