@@ -1,0 +1,343 @@
+/* 
+.sidebar {
+    min-height: 100vh;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #f0f4f9;
+    padding: 25px 15px;
+}
+body {
+    overflow: hidden; 
+}
+
+
+.sidebar img {
+    width: 20px;
+}
+
+.sidebar .menu {
+    display: block;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.sidebar .new-chat
+{
+    margin-top: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: #e6eaf1;
+    border-radius: 50px;
+    font-size: 14px;
+    color: grey;
+    cursor: pointer;
+}
+.sidebar .recent{
+    display:flex;
+    flex-direction: column;
+    margin-bottom: 370px;
+}
+
+.sidebar .recent-title {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.sidebar .recent-entry {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    padding: 10px;
+    padding-right: 40px;
+    border-radius: 50px;
+    color: #282828;
+    cursor: pointer;
+}
+
+.sidebar .recent-entry:hover{
+    background-color: #e2e6eb;
+}
+.sidebar .bottom{
+    display: flex;
+    flex-direction: column;
+}
+.sidebar .bottom-item{
+    padding-right: 10px;
+    cursor: pointer;
+}
+
+.sidebar .recent {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 370px;
+  overflow-y: auto; /* Enable vertical scrolling 
+  max-height: calc(100vh - 150px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar .recent::-webkit-scrollbar {
+  display: none; 
+}
+
+.sidebar .load-more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto; 
+    padding: 10px 20px;
+    background-color: #e6eaf1; 
+    color: #555; 
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .load-more:hover {
+    background-color: #d5dae0;
+    color: #000;
+}
+
+
+
+
+
+
+
+
+
+
+
+.recent-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .chat-content {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .chat-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .menu-icon {
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .menu-icon img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .menu-dropdown {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+  }
+  
+  .menu-dropdown p {
+    margin: 0;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
+  .menu-dropdown p:hover {
+    background-color: #f5f5f5;
+  }
+   */
+
+
+
+
+
+
+
+
+
+
+
+
+
+   .sidebar {
+    min-height: 100vh;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #161622;
+    padding: 25px 15px;
+}
+
+body {
+    overflow: hidden;
+    background-color: #161622; /* Match the full background color theme */
+}
+
+.sidebar img {
+    width: 20px;
+}
+
+.sidebar .menu {
+    display: block;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #c4c7c5; /* Text color for consistency */
+}
+
+.sidebar .new-chat {
+    margin-top: 50px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: #1e1e2a; /* Darker shade for contrast */
+    border-radius: 50px;
+    font-size: 14px;
+    color: #c4c7c5;
+    cursor: pointer;
+}
+
+.sidebar .new-chat:hover {
+    background-color: #2a2a3e; /* Slightly lighter hover effect */
+}
+
+.sidebar .recent {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 370px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 150px); /* Adjust height based on available space */
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+.sidebar .recent::-webkit-scrollbar {
+    display: none; /* Hide scrollbars for clean look */
+}
+
+.sidebar .recent-title {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #c4c7c5; /* Match text color theme */
+}
+
+.sidebar .recent-entry {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    padding: 10px;
+    padding-right: 40px;
+    border-radius: 50px;
+    color: #c4c7c5; /* Neutral text color */
+    cursor: pointer;
+    background-color: #1e1e2a; /* Card-like background */
+}
+
+.sidebar .recent-entry:hover {
+    background-color: #2a2a3e; /* Slightly brighter for hover */
+}
+
+.sidebar .bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .bottom-item {
+    padding-right: 10px;
+    cursor: pointer;
+    color: #c4c7c5;
+}
+
+.sidebar .load-more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto; /* Center horizontally with some spacing */
+    padding: 10px 20px; /* Add padding for a comfortable click area */
+    background-color: #1e1e2a; /* Dark background color */
+    color: #c4c7c5; /* Neutral text */
+    font-size: 14px; /* Adjust font size */
+    font-weight: bold; /* Make the text bold */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s, color 0.3s; /* Smooth hover effects */
+}
+
+.sidebar .load-more:hover {
+    background-color: #2a2a3e; /* Slightly brighter background on hover */
+    color: #ffffff; /* Text becomes brighter on hover */
+}
+
+.recent-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #2a2a3e; /* Subtle border for separation */
+}
+
+.chat-content {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.chat-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #c4c7c5; /* Neutral text color */
+}
+
+.menu-icon {
+    cursor: pointer;
+    position: relative;
+}
+
+.menu-icon img {
+    width: 20px;
+    height: 20px;
+}
+
+.menu-dropdown {
+    position: absolute;
+    top: 25px;
+    right: 0;
+    background: #1e1e2a;
+    border: 1px solid #2a2a3e;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.menu-dropdown p {
+    margin: 0;
+    padding: 10px 15px;
+    cursor: pointer;
+    color: #c4c7c5;
+}
+
+.menu-dropdown p:hover {
+    background-color: #2a2a3e; /* Slightly brighter hover */
+}
+
+.sidebar img{
+  width: 20px;
+  background-color: transparent;
+}
