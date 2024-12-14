@@ -31,6 +31,28 @@ const App = () => {
       }
     };
 
+    // const checkSession = async () => {
+    //   try {
+    //     // Attempt to get the current user session
+    //     const session = await account.getSession('current');
+    //     const now = new Date().getTime();
+    //     const expiryTime = new Date(session.expire).getTime();
+
+    //     // Check if the session is still valid
+    //     if (now < expiryTime) {
+    //       setIsAuthenticated(true); // Session is valid
+    //     } else {
+    //       // Session has expired
+    //       await account.deleteSession('current'); // Optionally delete expired session
+    //       setIsAuthenticated(false);
+    //     }
+    //   } catch (error) {
+    //     console.error("Not logged in or session expired", error);
+    //     setIsAuthenticated(false);
+    //   }
+    // };
+
+
     checkSession();
   }, []);
 
